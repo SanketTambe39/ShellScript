@@ -1,0 +1,422 @@
+==============Selection Practice Problems with if & else===============
+1. Write a program that reads 5 Random 3 Digit values and then outputs the minimum
+and the maximum value
+Ans:
+#!/bin/bash
+
+num1=$(( RANDOM%900+100))
+num2=$(( RANDOM%900+100))
+num3=$(( RANDOM%900+100))
+num4=$(( RANDOM%900+100))
+num5=$(( RANDOM%900+100))
+
+echo " num1 " $num1 " num2 " $num2 " num3 " $num3 " num4 " $num4 " num5 " $num5
+
+#max=$num1
+#min=$num1
+
+if [[ $num1 -gt $num2 && $num1 -gt $num3 && $num1 -gt $num4 ]]
+then
+	max=$num1
+elif [[ $num2 -gt $num3 && $num2 -gt $num4 ]]
+then
+        max=$num2
+elif [[ $num3 -gt $num4 ]]
+then
+        max=$num3
+else
+        max=$num4
+fi
+
+if [[ $num1 -lt $num2 && $num1 -lt $num3 && $num1 -lt $num4 ]]
+then
+        min=$num1
+elif [[ $num2 -lt $num3 && $num2 -lt $num4 ]]
+then
+        min=$num2
+elif [[ $num3 -lt $num4 ]]
+then
+        min=$num3
+else
+
+        min=$num5
+fi
+
+echo " Maximum is " $max " Minimum is " $min
+
+2. Write a program that takes day and month from the command line and prints true if
+day of month is between March 20 and June 20, false otherwise.
+Ans :
+#!/bin/bash
+
+March="03-20"
+June="07-20"
+
+TODAY=`date +%m-%d`
+echo $TODAY
+echo $March
+
+if [[ $March < $TODAY && $June > $TODAY ]]
+then
+	echo "True"
+else
+	echo "False"
+fi
+#echo $today
+
+3. Write a program that takes a year as input and outputs the Year is a Leap Year or not
+a Leap Year. A Leap Year checks for 4 Digit Number, Divisible by 4 and not 100 unless
+divisible by 400.
+Ans :
+#!/bin/bash
+
+read -p "Enter the year ::" year
+
+if [[ $(($year % 4)) -eq 0 && $(($year % 100)) != 0 || $(($year % 400)) -eq 0 ]]
+then
+	echo "its a leap year"
+else
+	echo "its not a leap year"
+fi
+
+4. Write a program to simulate a coin flip and print out "Heads" or "Tails" accordingly.
+Ans :
+#!/bin/bash
+
+coin=$((RANDOM%2))
+
+if [ $coin -eq 1 ]
+then
+	echo "head"
+else
+	echo "Tail"
+fi
+
+===========================Selection Practice Problems with if, elif and else=============
+1. Read a single digit number and write the number in word
+Ans :
+#!/bin/bash
+
+read -p "Enter digit to check in word ::" digit
+
+if [ $digit -eq 0 ]
+then
+	echo "Zero"
+elif [ $digit -eq 1 ]
+then
+	echo "One"
+elif [ $digit -eq 2 ]
+then
+        echo "Two"
+elif [ $digit -eq 3 ]
+then
+        echo "Three"
+elif [ $digit -eq 4 ]
+then
+        echo "Four"
+elif [ $digit -eq 5 ]
+then
+        echo "Five"
+elif [ $digit -eq 6 ]
+then
+        echo "Six"
+elif [ $digit -eq 7 ]
+then
+        echo "Seven"
+elif [ $digit -eq 8 ]
+then
+        echo "Eight"
+elif [ $digit -eq 9 ]
+then
+        echo "Nine"
+else
+	echo "number is more than one digit"
+fi
+
+2. Read a Number and Display the week day (Sunday, Monday,...)
+Ans:
+#!/bin/bash
+
+read -p "Enter week number to check ( Starts from 0 to 6) ::" week
+
+if [ $week -eq 0 ]
+then
+	echo "Sunday"
+elif [ $week -eq 1 ]
+then
+	echo "Monday"
+elif [ $week -eq 2 ]
+then
+        echo "Tuesday"
+elif [ $week -eq 3 ]
+then
+        echo "Wednesday"
+elif [ $week -eq 4 ]
+then
+        echo "Thursday"
+elif [ $week -eq 5 ]
+then
+        echo "Friday"
+elif [ $week -eq 6 ]
+then
+        echo "Saturday"
+else
+	echo "please enter valid number from 0 to 6"
+fi
+
+3. Read a Number 1, 10, 100, 1000, etc and display unit, ten, hundred,...
+Ans:
+#!/bin/bash
+
+read -p " Enter number which you want to check :: " digit
+
+if [ $digit -eq 1 ]
+then
+	echo "unit"
+elif [ $digit -eq 10 ]
+then
+	echo "ten"
+elif [ $digit -eq 100 ]
+then
+        echo "hundred"
+elif [ $digit -eq 1000 ]
+then
+        echo "Thousands"
+elif [ $digit -eq 10000 ]
+then
+        echo "Ten Thousands"
+elif [ $digit -eq 100000 ]
+then
+        echo "Lakhs"
+elif [ $digit -eq 1000000 ]
+then
+        echo "Ten Lakhs"
+elif [ $digit -eq 10000000 ]
+then
+        echo "Crores"
+elif [ $digit -eq 100000000 ]
+then
+        echo "Ten Crores"
+elif [ $digit -eq 1000000000 ]
+then
+        echo "Arab"
+else
+	echo " More than one Arab "
+fi
+
+4. Enter 3 Numbers do following arithmetic operation and find the one that
+is maximum and minimum
+1. a + b * c 3. c + a / b
+2. a % b + c 4. a * b + c
+Ans:
+#!/bin/bash
+
+number1=16
+number2=55
+number3=27
+
+opration1=$(($number1+$number2*$number3))
+echo $opration1
+opration2=$(($number3+$number1/$number2))
+echo $opration2
+opration3=$(($number1%$number2+$number3))
+echo $opration3
+opration4=$(($number1*$number2+$number3))
+echo $opration4
+
+if [[ $opration1 -ge $opration2 && $opration1 -ge $opration3
+	&& $opration1 -ge $opration4 ]]
+then
+	echo $opration1 " is maximum "
+elif [[ $opration2 -ge $opration1 && $opration2 -ge $opration3
+        && $opration2 -ge $opration4 ]]
+then
+        echo $opration2 " is maximum "
+elif [[ $opration3 -ge $opration1 && $opration3 -ge $opration2
+        && $opration3 -ge $opration4 ]]
+then
+        echo $opration3 " is maximum "
+elif [[ $opration4 -ge $opration1 && $opration4 -ge $opration2
+        && $opration4 -ge $opration3 ]]
+then
+        echo $opration4 " is maximum "
+fi
+
+if [[ $opration1 -le $opration2 && $opration1 -le $opration3
+        && $opration1 -le $opration4 ]]
+then
+        echo $opration1 " is minimum "
+elif [[ $opration2 -le $opration1 && $opration2 -le $opration3
+        && $opration2 -le $opration4 ]]
+then
+        echo $opration2 " is minimum "
+elif [[ $opration3 -le $opration1 && $opration3 -le $opration2
+        && $opration3 -le $opration4 ]]
+then
+        echo $opration3 " is minimum "
+elif [[ $opration4 -le $opration1 && $opration4 -le $opration2
+        && $opration4 -le $opration3 ]]
+then
+        echo $opration4 " is minimum "
+fi
+
+===========Selection Practice Problems with case statement==============
+1. Read a single digit number and write the number in word using Case
+Ans:
+#!/bin/bash
+
+read -p "Enter digit to check in word ::" digit
+
+case $digit in
+	0)
+		echo "Zero"
+	;;
+	1)
+		echo "One"
+	;;
+	2)
+		echo "Two"
+	;;
+	3)
+	        echo "Three"
+	;;
+	4)
+	        echo "Four"
+	;;
+	5)
+	        echo "Five"
+	;;
+	6)
+	        echo "Six"
+	;;
+	7)
+	        echo "Seven"
+	;;
+	8)
+	        echo "Eight"
+	;;
+	9)
+        	echo "Nine"
+	;;
+	*)
+		echo "number is more than one digit"
+	;;
+esac
+
+2. Read a Number and Display the week day (Sunday, Monday,...)
+Ans:
+#!/bin/bash
+
+read -p "Enter week number to check ( Starts from 0 to 6) ::" week
+
+case $week in
+	0)
+		echo "Sunday"
+	;;
+	1)
+                echo "Monday"
+        ;;
+        2)
+                echo "Tuesday"
+        ;;
+        3)
+                echo "Wednesday"
+        ;;
+        4)
+                echo "Thursday"
+        ;;
+        5)
+                echo "Friday"
+        ;;
+        6)
+                echo "Saturday"
+        ;;
+        *)
+                echo "Please enter valid number from 0 to 6"
+        ;;
+esac
+
+3. Read a Number 1, 10, 100, 1000, etc and display unit, ten, hundred,...
+Ans:
+#!/bin/bash
+
+read -p " Enter number which you want to check :: " digit
+
+case $digit in
+	1)
+		echo "Unit"
+	;;
+	10)
+		echo "Ten"
+	;;
+	100)
+			echo "Hundred"
+	;;
+	1000)
+			echo "Thousands"
+	;;
+
+	10000)
+			echo "Ten Thousands"
+	;;
+	100000)
+			echo "Lakh"
+	;;
+	1000000)
+			echo "Ten Lakh"
+	;;
+	10000000)
+		echo "crores"
+	;;
+	100000000)
+		echo "ten crores"
+	;;
+	1000000000)
+		echo "Arab"
+	;;
+	*)
+		echo "More than one Arab"
+	;;
+esac
+
+4. Write a program that takes User Inputs and does Unit Conversion of
+different Length units
+1. Feet to Inch 	3. Inch to Feet
+2. Feet to Meter 	4. Meter to Feet
+
+Ans:
+
+#!/bin/bash
+
+echo "Following are some operation we do ::"
+echo " 1) Feet to Inch "
+echo " 2) Inch to Feet "
+echo " 3) Feet to Meter "
+echo " 4) Meter to Feet "
+
+read -p " Please choose which opreation you want to perform :: " choice
+
+case $choice in
+	1)
+		read -p " please enter feet you want to check :: " feet
+		inches=$(($feet*12))
+		echo "By Converting "$feet "feet to Inches we got "$inches" Inches "
+	;;
+        2)
+                read -p " please enter inch you want to check :: " inch
+                feet=$(($inch/12))
+		feet2=$(($inch%12))
+                echo "By Converting "$inch "inch to Feet we got "$feet"."$feet2" Feet"
+        ;;
+        3)
+                read -p " please enter Feet you want to check :: " feet
+                awk -v givenfeet=$feet -v onemeter=3.281 'BEGIN{ finalmeter=(givenfeet/onemeter); print " by converting" givenfeet " to meter we got " finalmeter};'
+        ;;
+        4)
+                read -p " please enter Meter you want to check :: " meter
+                awk -v givenmeter=$meter -v onefeet=3.281 'BEGIN{ finalfeet=(givenmeter*onefeet); print " by converting " givenmeter " to feet we got " finalfeet};'
+        ;;
+	*)
+		echo "Invalid selection"
+	;;
+esac

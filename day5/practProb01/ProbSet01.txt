@@ -1,0 +1,66 @@
+=======================Sequences Practice Problems============================
+
+1. Use Random Function (( RANDOM )) to get Single Digit
+Ans : 
+#!/bin/bash
+
+singleDigit=$((RANDOM%10))
+
+echo "single Digit genrated randomly is :: "$singleDigit
+
+2. Use Random to get Dice Number between 1 to 6
+Ans :
+#!/bin/bash
+
+randomDice=$((RANDOM%6+1))
+
+echo "Random dice number between 1 to 6 is ::"$randomDice
+
+3. Add two Random Dice Number and Print the Result
+Ans :
+#!/bin/bash
+
+firstRandomDice=$((RANDOM%6+1))
+secondRandomDice=$((RANDOM%6+1))
+
+echo "Addition of two random dice is ::"$(($firstRandomDice+$secondRandomDice))
+
+4. Write a program that reads 5 Random 2 Digit values , then find their
+sum and the average
+Ans :
+#!/bin/bash
+
+sum=0
+
+for (( i=0 ; i<5 ; i++ ))
+do
+        sum=$((sum+$(($((RANDOM%90))+10))))
+done
+
+echo "Addition is :: $sum"
+avg1=$(($sum/5))
+avg2=$(($sum%5))
+echo "Avg is :: $avg1.$avg2"
+
+5. Unit Conversion
+a. 1ft = 12 in then 42 in = ? ft
+b. Rectangular Plot of 60 feet x 40 feet in meters
+c. Calculate area of 25 such plots in acres
+
+Ans :
+#!/bin/bash
+
+oneFt=12
+
+echo "42 in = "$((42/$oneFt))"."$((42%$oneFt))" ft"
+
+w=60
+l=40
+
+convo=`awk 'BEGIN {print (60*40/3.281)}'`
+
+echo "Area of rectangular plot is :: $convo"
+
+acres=`awk 'BEGIN {print (731.484/4047)}'`
+
+echo "Total area of 25 such plots in acres is :: $acres "
