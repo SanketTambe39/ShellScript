@@ -10,4 +10,3 @@ do
 	result=$(($result*$number))
 	echo $result
 done
-

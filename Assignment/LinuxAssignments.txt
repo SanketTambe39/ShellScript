@@ -1,0 +1,183 @@
+
+-------------------------------------------------Shell Script Assigniments---------------------------------------------------------------------------
+
+Assignment 1 : Move files from folder have file abc.txt,def.txt,ghi.txt,jkl.txt
+
+Shell Script:
+#! /bin/bash
+
+for filename in `ls *.txt`
+do
+        foldername=`echo $filename | awk -F. '{print $1}'`
+        if [ -d $foldername ]
+        then
+                rm -r $foldername
+        fi
+		mkdir $foldername
+        cp $filename $foldername
+        echo "Done"
+done
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 2 : Append current date to all log files name which has extension .log. 1 from a folder
+
+shell script:
+#! /bin/bash
+
+count=`find -name "*.log.1" | wc -l`
+#echo $count
+
+if [ $count != 0 ]
+then
+
+        for name in `ls *.log.1`
+        do
+                basename=`echo $name | awk -F. '{print $1}'`
+                today=`date +"%d%m%Y"`
+                newname=$basename$today"."log
+                mv $basename".log.1" $newname
+                echo name of $basename.log.1 is changed to $newname
+        done
+else
+        echo no such file found
+fi
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 3: Archive the files from /TerminalCommands/linux-content folder which have modified 7 days ago and move it to your backup folder 
+
+shell script:
+#! /bin/bash
+
+
+#! /bin/bash
+# -mtime is for date. I did with -mmin which is for minutes for getting the output
+
+for name in `find . -mtime +7 | ls -p | grep -v / `
+do
+        if [ $name != "backup.sh" ]
+        then
+                mv $name backup
+                echo $name is moved to backup folder successfully
+        fi
+done
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 4 : Check if a folder exists or not. If it's not present , create it
+
+shell script:
+#! /bin/bash
+
+folder="sample"
+
+if [ -d $folder ]
+then
+        echo folder already exists.
+else
+        mkdir $folder
+        echo  folder $folder created.
+fi
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 5 : Execute command "hello" and "Is" and check its execution status and print whether command executed successful or not.
+
+shell script:
+#! /bin/bash
+
+hello
+echo execution status of hello is $?
+
+ls
+echo execution status of ls is $?
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 6 : Set environment usersecret="dH34xJaa23" if its already not set
+
+shell script:
+#! /bin/bash -x
+
+count=0
+
+for envvariable in `env | awk -F= '{print $1}'`
+do
+#       echo $envvariable
+        if [ $envvariable == "usersecret" ]
+        then
+                count+=1
+        fi
+done
+
+if [ $count==0 ]
+then
+        export usersecret="dH34xJaa23"
+        echo "usersecret is set successfully"
+else
+        echo "Error. Variable is already set"
+fi
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 7 :Find a word "systemd" from all log files in the folder /var/log and print number of occurrence more than 0 against each file. 
+
+shell script:
+#! /bin/bash
+
+for occ in `ls`
+do
+        numberOfTimes=`cat $occ | grep -0 -i systemd | wc -l`
+        echo "systemd is present in "$occ $numberOfTimes" times"
+done
+------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 1: Print last 4 frequently access urls count in sorted order from access.log 
+
+command: cat access.log | awk -F\" '{if($4!="-")print $4}' | sort | uniq -c | sort -nr | head -4
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 2 : Print list of last 4 frequently access unique urls at particular hours from access.log
+
+command :  cat access.log | awk '$4 >= "[04/Mar/2020:07:00:00" && $4 < "[31/Mar/2020:08:00:00"' | awk -F\" '{if($4!="-")print $4}' | sort -n | uniq -c | sort -nr | head -4
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 3 : Print list of web response code count in the unique sorted order at specific hours
+
+command : cat access.log |awk '$4 >= "[04/Mar/2020:07:00:00" && $4 < "[31/Mar/2020:08:00:00"'| awk '{if($7!="/") print $9}' | sort | uniq -c | sort -nr | head -4
+------------------------------------------------------------------------------------------------------------------------------------------------------
+	
+Assignment 4 : Print list of last 10 unique sorted client IP from access.log 
+
+command : $ cat access.log | awk '{print $NF}' | sort | uniq -c | sort -nr | tail -10
+	
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 5 : Data analysis / manipulation (Awk) 
+
+i) Print EmployeeName and TotalPay who has BasePay greater than 10000
+
+	command : cat data.csv | awk '{if($4>10000) print $0}' | awk '{print $2"  "$7}'
+
+ii) What is the aggregate TotalPay of employees whose jobtitle is 'CAPTAIN' 
+
+	command : $ cat data.csv | awk '{if($3=="CAPTAIN") print $0}' | awk '{aggregate+=$7} END {print aggregate}'
+	
+iii) Print JobTitle and Overtimepay who has Overtimepay is between 7000 and 10000
+
+	command :$ cat data.csv | awk '{if(($5>7000)&&($5<10000)) print $3 " " $5 }'
+
+iv) Print average BasePay 
+
+	command :$ cat data.csv | awk '{total+=$4}{count+=1} END {print (total/count)}'
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Assignment 6: Find the difference between original file and the updated file. Apply changes to the original file. 
+
+command : mkdir original updated | mv original-file.sh original | mv updated-file.sh updated | diff -q original/original-file.sh  updated/updated-file.sh 
+	| awk '{if($NF=="differ") print "Files are different"}'| mkdir original-backup | cp original/original-file.sh original-backup 
+	| cp updated/updated-file.sh original/original-file.sh | diff -s original/original-file.sh  original-backup/original-file.sh
+	| awk '{if($NF=="identical") print "files are same"}' |

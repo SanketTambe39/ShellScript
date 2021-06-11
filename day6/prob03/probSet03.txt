@@ -1,0 +1,130 @@
+===================Functions Practice Problems============
+1. Help user find degF or degC based on their Conversion Selection. Use
+Case Statement and ensure that the inputs are within the Freezing Point (
+0 °C / 32 °F ) and the Boiling Point of Water ( 100 °C / 212 °F )
+a. degF = (degC * 9/5) + 32
+b. degC = (degF – 32) * 5/9
+
+Ans:
+
+#!/bin/bash
+CELSIUS_TO_FAHREN=1
+FAHREN_TO_CELSIUS=2
+
+function degreeConvertor()
+{
+        case $1 in
+                $CELSIUS_TO_FAHREN )
+                                        if [[ $2 -ge 0 && $2 -le 100 ]]
+                                        then
+                                                cal=`echo $2 1.8| awk '{print $1*$2}'`;
+                                                echo $cal 32 | awk '{print $1+$2}';
+                                        else
+                                                echo "Incorrect Input"
+                                        fi
+                                        ;;
+                $FAHREN_TO_CELSIUS )
+                                        if [[ $2 -ge 32 && $2 -le 212 ]]
+               then
+                                                cal=$(( $2-32 ))
+                  echo $cal 0.55| awk '{print $1*$2}';
+               else
+                  echo "Incorrect Input"
+               fi
+                                        ;;
+        esac
+}
+
+echo "1. Celsius to Fahrenheit"
+echo "2. Fahrenheit to Celsius"
+echo "Select any one option: "
+read optionSelected
+read -p "Enter temp to convert:" temp
+resultConversion="$( degreeConvertor $(( $optionSelected )) $(( $temp )) )"
+echo "Result after conversion is: "$resultConversion
+
+2. Write a function to check if the two numbers are Palindromes
+Ans:
+#!/bin/bash
+
+isPalindrome()
+{
+        local s=$1
+        local len=${#s}
+        for (( i=0;i<len/2;i+=1 ))
+        do
+                if [[ ${s:i:1} != ${s:len-i-1:1} ]]
+                then
+                return 1 # false
+                fi
+        done
+        return 0 # true
+}
+
+for word in "$@"
+do
+        isPalindrome $word
+        if [[ $? -eq 0 ]]; then
+                echo "String is palindrome."
+        else
+                echo "String is not palindrome."
+        fi
+done
+
+3. Take a number from user and check if the number is a Prime then show
+that its palindrome is also prime
+a. Write function check if number is Prime
+b. Write function to get the Palindrome.
+c. Check if the Palindrome number is also prime
+Ans :
+#!/bin/bash -x
+
+function checkPalindrome()
+{
+	number=$1
+	reverse=0
+	n=$1
+	while [ $n -gt 0 ]
+	do
+		a=`expr $n % 10 `
+		n=`expr $n / 10 `
+		reverse=`expr $reverse \* 10 + $a`
+	done
+	echo $reverse
+}
+
+function checkPrime()
+{
+	flag=0
+	for(( i=2; i<=$(($1/2)); i++ ))
+	do
+        if [ $(( $1%$i )) -eq 0 ]
+        then
+                flag=1
+                break
+        fi
+	done
+	if [ $1 -eq 1 ]
+	then
+        echo "1 is neither prime not composite!";
+	elif [ $flag -eq 1 ]
+	then
+        echo $1" is not a prime number";
+	else
+        echo true
+	fi
+}
+
+read -p "Enter number to check: " num
+res="$(checkPrime $(( $num )))"
+if [[ $res ]]
+then
+	checkReversePalindrome="$( checkPalindrome $(( $num )))"
+	res="$(checkPrime $(( $checkReversePalindrome )))"
+	if [[ $res -eq true ]]
+	then
+		echo $checkReversePalindrome" is a Prime number!"
+	else
+		echo $res;
+	fi
+fi

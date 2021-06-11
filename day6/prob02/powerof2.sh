@@ -7,8 +7,7 @@ number=2
 
 i=0
 
-#while [[ $i -lt $num && $result -lt 256 ]]
-while [[ $i -lt $num ]]
+while [[ $i -lt $num && $result -lt 256 ]]
 do
 	result=$(($result*$number))
 	echo $result

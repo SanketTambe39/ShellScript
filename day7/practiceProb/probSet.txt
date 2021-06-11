@@ -1,0 +1,118 @@
+=================Arrays Practice Problems================
+1. Write a program in the following steps
+a. Generates 10 Random 3 Digit number.
+b. Store this random numbers into a array.
+c. Then find the 2nd largest and the 2nd smallest element without sorting the array.
+Ans:
+#!/bin/bash
+
+for ((n=0;n<10;n++))
+do
+        rArray[$n]=$(( RANDOM%900+100 ))
+done
+
+min=max=${rArray[0]}
+smin=smax='unset'
+
+for((i=1; i < 10 ; i++))
+do
+        if [[ ${rArray[i]} > $max ]]
+        then
+                smax=$max
+                max=${rArray[i]}
+        elif (( ${rArray[i]} != $max )) && { [[ "$smax" = "unset" ]] || [[ ${rArray[i]} > $smax ]]; }
+        then
+                smax=${rArray[i]}
+        fi
+
+        if [[ ${rArray[i]} < $min ]]
+        then
+                smin=$min
+                min=${rArray[i]}
+        elif (( ${rArray[i]} != $min )) && { [[ "$smin" = "unset" ]] || [[ ${rArray[i]} < $smin ]]; }
+        then
+                smin=${rArray[i]}
+        fi
+
+
+
+done
+
+echo "Array is :: "${rArray[@]}
+echo "second Maximum number is  = " $smax
+echo "second Minumum Number is = " $smin
+
+2. Extend the above program to sort the array and then find the 2nd largest
+and the 2nd smallest element.
+Ans:
+#!/bin/bash
+
+for ((n=0;n<10;n++))
+do
+        rArray[$n]=$(( RANDOM%900+100 ))
+done
+
+smax=$(printf '%s\n' "${rArray[@]}" | sort -n | tail -2 | head -1)
+smin=$(printf '%s\n' "${rArray[@]}" | sort -n | head -2 | tail -1)
+
+echo "Array is :: "${rArray[@]}
+echo "second Maximum number is  = " $smax
+echo "second Minumum Number is = " $smin
+
+3. Extend the Prime Factorization Program to store all the Prime Factors of a
+number n into an array and finally display the output.
+Ans:
+#!/bin/bash
+
+read -p "Enter a number :: " num
+
+count=0
+
+for i in $(factor $num)
+do
+        if [[ $i != "$num:" ]]
+        then
+                factArray[((count++))]=$i
+        fi
+done
+
+echo ${factArray[@]}
+
+4. Write a Program to show Sum of three Integer adds to ZERO
+Ans:
+#!/bin/bash
+
+arr=(0, -1, 2, -3, 1)
+size=5
+flag=0
+
+for ((i=0;i<3;i++))
+do
+        for ((j=1;j<4;j++))
+        do
+                for ((k=2;j<5;j++))
+                do
+                        if [ $(($i+$j+$k==0)) ]
+                        then
+                                flag=1
+                        fi
+                done
+        done
+done
+
+5. Take a range from 0 – 100, find the digits that are repeated twice like 33, 77,
+etc and store them in an array
+Ans:
+#!/bin/bash
+
+count=0
+
+for i in {0..100}
+do
+        if [[ $(($i/10)) == $(($i%10)) ]] && [[ $i != 0 ]]
+        then
+                repArray[ ((count++)) ]=$i
+        fi
+done
+
+echo "All the values which are repeting are here :: "${repArray[@]}

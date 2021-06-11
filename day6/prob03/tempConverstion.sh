@@ -1,44 +1,35 @@
 #!/bin/bash
+CELSIUS_TO_FAHREN=1
+FAHREN_TO_CELSIUS=2
 
-function ftoc()
+function degreeConvertor()
 {
-	read -p "Please enter Fahrenheit ::" f
-	if [[ $f -ge 32 && $f -le 212 ]]
-	then
-#		c=$(echo "scale=2;(5/9)*($tf-32)"|bc)
-		echo "55 F =12.7778 C"
-	else
-		echo "Wrong input"
-	fi
+	case $1 in
+		$CELSIUS_TO_FAHREN )
+					if [[ $2 -ge 0 && $2 -le 100 ]]
+					then
+						cal=`echo $2 1.8| awk '{print $1*$2}'`;
+						echo $cal 32 | awk '{print $1+$2}';
+					else
+						echo "Incorrect Input"
+					fi
+					;;
+		$FAHREN_TO_CELSIUS )
+					if [[ $2 -ge 32 && $2 -le 212 ]]
+               then
+						cal=$(( $2-32 ))
+                  echo $cal 0.55| awk '{print $1*$2}';
+               else
+                  echo "Incorrect Input"
+               fi
+					;;
+	esac
 }
 
-function ctof()
-{
-        read -p "Please enter Celsius ::" c
-        if [[ $f -ge 0 && $f -le 100 ]]
-        then
-		f=$(echo "scale=2;((9/5) * $tc) + 32" |bc)
-                echo "$c C =$f F"
-        else
-                echo "Wrong input"
-        fi
-}
-
-
-echo "*** Converting between the different temperature scales ***"
-echo "1. Convert Celsius temperature into Fahrenheit"
-echo "2. Convert Fahrenheit temperatures into Celsius"
-read -p "Select your choice (1-2) : " ch
-
-
-case $ch in
-	1)
-		ftoc
-	;;
-	2)
-		ctof
-	;;
-	*)
-		echo "Wrong input"
-	;;
-esac
+echo "1. Celsius to Fahrenheit"
+echo "2. Fahrenheit to Celsius"
+echo "Select any one option: "
+read optionSelected
+read -p "Enter temp to convert:" temp
+resultConversion="$( degreeConvertor $(( $optionSelected )) $(( $temp )) )"
+echo "Result after conversion is: "$resultConversion

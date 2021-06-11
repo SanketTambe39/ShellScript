@@ -1,44 +1,51 @@
 #!/bin/bash
 
-read -p "Enter a number" num
-
-flag=1
-
-function palindrome()
+function checkPalindrome()
 {
-        local s=$1
-        local len=${#s}
-        for (( i=0;i<len/2;i+=1 ))
-        do
-                if [[ ${s:i:1} != ${s:len-i-1:1} ]]
-                then
-                        return 1
-                fi
-        done
-        return 0
-}
-
-function isprime()
-{
-
-	for((i=2; i<=num/2; i++))
+	number=$1
+	reverse=0
+	n=$1
+	while [ $n -gt 0 ]
 	do
-		if [ $((num%i)) -eq 0 ]
-		then
-			flag=1
-			echo $num is not palindrome
-			exit
-		fi
+		a=`expr $n % 10 `
+		n=`expr $n / 10 `
+		reverse=`expr $reverse \* 10 + $a`
 	done
-	flag=0
-	echo $num is prime
+	echo $reverse
 }
 
-isprime $num
-palindrome $num
-if [[ $? -eq 0 ]]
+function checkPrime()
+{
+	flag=0
+	for(( i=2; i<=$(($1/2)); i++ ))
+	do
+        if [ $(( $1%$i )) -eq 0 ]
+        then
+                flag=1
+                break
+        fi
+	done
+	if [ $1 -eq 1 ]
+	then
+        echo "1 is neither prime not composite!";
+	elif [ $flag -eq 1 ]
+	then
+        echo $1" is not a prime number";
+	else
+        echo true
+	fi
+}
+
+read -p "Enter number to check: " num
+res="$(checkPrime $(( $num )))"
+if [[ $res ]]
 then
-	echo "String is palindrome."
-else
-	echo "String is not palindrome."
+	checkReversePalindrome="$( checkPalindrome $(( $num )))"
+	res="$(checkPrime $(( $checkReversePalindrome )))"
+	if [[ $res -eq true ]]
+	then
+		echo $checkReversePalindrome" is a Prime number!"
+	else
+		echo $res;
+	fi
 fi
