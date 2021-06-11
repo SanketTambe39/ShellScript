@@ -1,2 +1,6 @@
 hey 
+<<<<<<< HEAD
 what's up
+=======
+sanket 
+>>>>>>> 4556506764f4a4b620a6d7240f83d55036afada5
